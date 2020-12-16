@@ -1,14 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 import swal from 'sweetalert';
+import '../styles/index.css';
 
 const Login = () => {
   const history = useHistory();
+  const { setCurrentUser } = useContext(AppContext);
   const [loginData, setLoginData] = useState({});
 
   const handleChange = (event) => {
     setLoginData({ ...loginData, [event.target.name]: event.target.value });
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('/api/login', loginData);
+      setCurrentUser(response.data);
+      sessionStorage.setItem('user', response.data);
+      history.push('/dashboard/equipment');
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const handleSubmit = async (event) => {
