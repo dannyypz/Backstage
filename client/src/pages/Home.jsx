@@ -21,6 +21,7 @@ const Home = () => {
             <p className="title-paragraph-1">
               We're here to make connecting venues and artists easier.
             </p>
+            <h1>Test</h1>
             <button
               type="button"
               onClick={() => {
