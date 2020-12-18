@@ -36,8 +36,7 @@ const CreateEvent = ({ handleClose, show }) => {
   const handleGenerateEvent = () => {
     if (!selectedPackage) {
       swal('Please select a stage', { icon: 'warning' });
-    }
-    if (selectedPackage) {
+    } else if (selectedPackage) {
       axios
         .post('/api/events', {
           data: { eventTitle, eventDate, selectedPackage }

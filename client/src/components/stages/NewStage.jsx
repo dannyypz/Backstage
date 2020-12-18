@@ -5,18 +5,26 @@ import swal from 'sweetalert';
 import '../../styles/index.css';
 
 const NewStage = () => {
-  const [stageData, setStageData] = useState(null);
+  const [stageData, setStageData] = useState();
   const history = useHistory();
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    await axios.post('/api/packages', stageData);
-    swal('Stage saved!', { icon: 'success' });
-    history.push('/dashboard/stages');
-  };
   const handleChange = async (event) => {
     setStageData({ ...stageData, [event.target.name]: event.target.value });
   };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await axios
+        .post('/api/packages', stageData)
+        .then((response) => console.log(response));
+      history.push('/dashboard/stages');
+      swal('Stage saved!', { icon: 'success' });
+    } catch (error) {
+      swal('Operation failed', { icon: 'error' });
+    }
+  };
+
   return (
     <div className="new-stage-full">
       <div>
@@ -93,7 +101,11 @@ const NewStage = () => {
           </div>
           <br />
           <div className="new-stage-button-box">
-            <button className="new-stage-button" type="submit">
+            <button
+              className="new-stage-button"
+              type="submit"
+              onClick={handleChange}
+            >
               Save
             </button>
           </div>
