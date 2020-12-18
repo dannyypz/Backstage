@@ -106,7 +106,7 @@ const NewStage = () => {
               type="submit"
               onClick={handleChange}
             >
-              Save
+              Save Stage
             </button>
           </div>
         </form>
